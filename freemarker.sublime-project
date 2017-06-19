@@ -1,0 +1,14 @@
+{
+	"folders":
+	[
+		{
+			"name": "FreeMarker Syntax",
+			"path": "syntax"
+		},
+		{
+			"name": "Configuration",
+			"path": ".",
+			"folder_exclude_patterns": ["syntax","snippets"]
+		}
+	]
+}

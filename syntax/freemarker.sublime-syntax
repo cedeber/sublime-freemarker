@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+name: HTML (FreeMarker)
+file_extensions:
+  - ftl
+first_line_match: (?i)<(!DOCTYPE\s*)?html
+scope: embedding.freemarker
+contexts:
+  main:
+    - match: ""
+      push: "Packages/HTML/HTML.sublime-syntax"
+      with_prototype:
+        # Comment
+        - match: "\\[#--"
+          push:
+            - meta_scope: comment.block.freemarker
+            - match: "--\\]"
+              pop: true
+        # Variable
+        - match: "\\$(?={)"
+          scope: storage.type.function.mustache
+          push:
+            - match: "}"
+              scope: meta.tag.inline.freemarker
+              pop: true
+            - match: "{"
+              scope: meta.tag.inline.freemarker
+            - match: "(?<=\\.)[\\w_]+(?=\\()"
+              scope: support.function.freemarker
+            - match: "\\w"
+              scope: constant.language.other.freemarker
+            - include: keywords
+            - include: string-double-quoted
+            - include: string-single-quoted
+        # Logic
+        - match: "(\\[\\/?#)(\\w+)"
+          captures:
+            1: punctuation.definition.tag.begin.html
+            2: keyword.control.other.freemarker
+          push:
+            - meta_content_scope: meta.tag.block.freemarker
+            - match: "\\/?\\]"
+              scope: punctuation.definition.tag.end.freemarker
+              pop: true
+            - match: "(?<=\\?)[\\w_]+(?=\\s)"
+              scope: entity.name.function.freemarker
+            - match: "(?<=\\.)[\\w_]+(?=\\()"
+              scope: support.function.freemarker
+            - match: "\\d"
+              scope: constant.numeric.freemarker
+            - match: "\\w"
+              scope: variables.other.freemarker
+            - include: keywords
+            - include: string-double-quoted
+            - include: string-single-quoted
+        # Area
+        - match: "(\\[\\/?@)(?=\\w*)"
+          captures:
+            1: punctuation.definition.tag.begin.html
+          push:
+            - meta_scope: meta.tag.block.freemarker
+            - match: "\\/?\\]"
+              scope: punctuation.definition.tag.end.html
+              pop: true
+            - match: "(?<=@)[\\w\\.]+"
+              scope: keyword.control.other.freemarker
+            - match: "\\d"
+              scope: constant.numeric.freemarker
+            - match: "\\w"
+              scope: variables.other.freemarker
+            - include: keywords
+            - include: string-double-quoted
+            - include: string-single-quoted
+
+  keywords:
+    - match: "\\."
+      scope: keyword.operator.accessor.freemarker
+    - match: "!|\\?|&&|\\|\\|"
+      scope: keyword.operator.logical.freemarker
+    - match: "="
+      scope: keyword.operator.assigment.freemarker
+    - match: "[\\+\\-\\*\\/]"
+      scope: keyword.operator.arithmetic.freemarker
+  string-double-quoted:
+    - match: '"'
+      scope: punctuation.definition.string.begin.html
+      push:
+        - meta_scope: string.quoted.double.html
+        - match: '"'
+          scope: punctuation.definition.string.end.html
+          pop: true
+  string-single-quoted:
+    - match: "'"
+      scope: punctuation.definition.string.begin.html
+      push:
+        - meta_scope: string.quoted.single.html
+        - match: "'"
+          scope: punctuation.definition.string.end.html
+          pop: true
