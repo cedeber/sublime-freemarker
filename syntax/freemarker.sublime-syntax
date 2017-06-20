@@ -69,11 +69,17 @@ contexts:
       scope: keyword.operator.accessor.freemarker
     - match: "!|\\?|\\?\\?|&&|\\|\\|"
       scope: keyword.operator.logical.freemarker
-    - match: "="
+    - match: "==|!=|>|<|>=|<="
+      scope: keyword.operator.comparison.freemarker
+    - match: "(?:\\s)lt|lte|gt|gte(?:\\s)"
+      scope: keyword.operator.comparison.freemarker
+    - match: "=|\\+=|\\-=|\\*=|\\/=|%=|\\+\\+|--"
       scope: keyword.operator.assigment.freemarker
-    - match: "[\\+\\-\\*\\/]"
+    - match: "[\\+\\-\\*\\/\\%]"
       scope: keyword.operator.arithmetic.freemarker
     - match: "(?:\\s)as(?:\\s)"
+      scope: keyword.operator.other.freemarker
+    - match: "\\.\\."
       scope: keyword.operator.other.freemarker
   syntax:
     - match: "(?<=\\?)[\\w_]+"
@@ -82,10 +88,14 @@ contexts:
       scope: support.function.freemarker
     - match: "(?:\\B[-+])?(\\b[0-9]+(\\.[0-9]*)?)"
       scope: constant.numeric.freemarker
+    - match: "true|false"
+      scope: constant.language.boolean.freemarker
     - match: "\\w"
       scope: variables.other.freemarker
     - match: "\\(|\\)"
       scope: mata.brace.round.freemarker
+    - match: "\\[|\\]"
+      scope: mata.brace.square.freemarker
   string-double-quoted:
     - match: '"'
       scope: punctuation.definition.string.begin.freemarker
