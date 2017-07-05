@@ -8,7 +8,7 @@ scope: embedding.freemarker
 contexts:
   main:
     - match: ""
-      push: "Packages/HTML/HTML.sublime-syntax"
+      push: "scope:text.html.basic"
       with_prototype:
         # Comment
         - match: "\\[#--"
