@@ -32,6 +32,22 @@ contexts:
             - include: string-double-quoted
             - include: string-single-quoted
         # Tag & Directive
+        - match: "(\\[\\/?#)(macro)(\\s\\w+)((\\s\\w+)*)"
+          captures:
+            1: punctuation.definition.block.begin.freemarker
+            2: keyword.control.other.freemarker
+            3: support.function.freemarker
+            4: variable.parameter.freemarker
+          push:
+            - meta_scope: meta.embedded.block.freemarker
+            - meta_content_scope: source.freemarker.embedded.html
+            - match: "\\/?\\]"
+              scope: punctuation.definition.block.end.freemarker
+              pop: true
+            - include: keywords
+            - include: syntax
+            - include: string-double-quoted
+            - include: string-single-quoted
         - match: "(\\[\\/?#)(\\w+)"
           captures:
             1: punctuation.definition.block.begin.freemarker
@@ -50,7 +66,7 @@ contexts:
         - match: "(\\[\\/?@)(\\w+)"
           captures:
             1: punctuation.definition.tag.begin.freemarker
-            2: keyword.control.other.freemarker
+            2: support.function.freemarker
           push:
             - meta_scope: meta.embedded.line.freemarker
             - meta_content_scope: source.freemarker.embedded.html
