@@ -57,7 +57,7 @@ contexts:
             - meta_content_scope: source.freemarker.embedded.html
             - match: "\\/?\\]"
               scope: punctuation.definition.block.end.freemarker
-              pop: true            
+              pop: true
             - include: keywords
             - include: syntax
             - include: string-double-quoted
